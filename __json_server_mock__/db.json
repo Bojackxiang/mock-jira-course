@@ -1,8 +1,34 @@
 {
-  "users": [
-    {
-      "name": "alex",
-      "id": 1
-    }
-  ]
+    "users": [
+        {
+            "name": "野比大雄",
+            "id": 1
+        },
+        {
+            "name": "藤原拓海",
+            "id": 2
+        }
+    ],
+    "projects": [
+        {
+            "name": "哆啦A梦的制造",
+            "id": 1,
+            "managerId": "1"
+        },
+        {
+            "name": "欺负小富",
+            "id": 2,
+            "managerId": "1"
+        },
+        {
+            "name": "战胜fb",
+            "id": 3,
+            "managerId": "2"
+        },
+        {
+            "name": "重修86",
+            "id": 4,
+            "managerId": "2"
+        }
+    ]
 }
