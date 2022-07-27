@@ -2,9 +2,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import test from "utils/test.js";
 import ProjectList from "lab/project-list";
+import { useEffect } from "react";
 
 function App() {
-  test();
   return (
     <ProjectList />
     // <div className="App">
