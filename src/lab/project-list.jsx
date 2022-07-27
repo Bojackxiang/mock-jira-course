@@ -5,37 +5,11 @@ const ProjectList = () => {
   const [input, setInput] = useState("");
   const [manager, setManager] = useState("");
   const [managers, setManagers] = useState([]);
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
 
-  const filterProjectsByManagerId = (managerId) => {
-    fetch("http://localhost:3001/projects?managerId=" + managerId)
-      .then((res) => res.json())
-      .then(setProjects)
-      .then(() => {
-        setManager(managerId);
-      });
-  };
-
-  const filterProjectsByProjectName = (input) => {
-    // ? 这边同时设置 project name 和 project 的时候有什么更好的方法吗 ？
-    setInput(input);
-    fetch("http://localhost:3001/projects?name=" + input)
-      .then((res) => res.json())
-      .then(setProjects)
-      .then((data) => {
-        const manager = data[0]?.manager;
-        if (manager) {
-          setManager(manager);
-        } else {
-          setManager("what");
-        }
-      });
-  };
-
-  // initialization the projects and users
+  /**
+   * Initialization the project and fetch user ana project data
+   * @param {*} managerId
+   */
   useEffect(() => {
     fetch("http://localhost:3001/projects")
       .then((res) => res.json())
@@ -46,6 +20,50 @@ const ProjectList = () => {
       .then((res) => res.json())
       .then(setManagers);
   }, []);
+
+  /**
+   * triggered when user change the select
+   * @param {*} managerId
+   */
+  const filterProjectsByManagerId = (managerId) => {
+    setInput("");
+    fetch(
+      `http://localhost:3001/projects?${
+        managerId ? "managerId=" + managerId : ""
+      }`
+    )
+      .then((res) => res.json())
+      .then(setProjects)
+      .then(() => {
+        setManager(managerId);
+      });
+  };
+
+  /**
+   * triggered when user change the input
+   * @param {*} input
+   */
+  const filterProjectsByProjectName = (input) => {
+    setInput(input);
+    if (input === "") {
+      setManager("");
+    }
+
+    fetch(`http://localhost:3001/projects?${input ? "name=" + input : ""}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setProjects(json);
+        return json;
+      })
+      .then((json) => {
+        const manager = json[0]?.managerId;
+        if (manager && input !== "") {
+          setManager(manager);
+        } else {
+          setManager("");
+        }
+      });
+  };
 
   return (
     <div>
@@ -87,7 +105,12 @@ const ProjectList = () => {
           {projects.map((project) => (
             <tr key={project.id}>
               <td>{project.name}</td>
-              <td>{project.manager}</td>
+              <td>
+                {
+                  managers.find((manager) => manager.id === project.managerId)
+                    .name
+                }
+              </td>
             </tr>
           ))}
         </tbody>
