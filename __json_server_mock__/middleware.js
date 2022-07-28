@@ -5,6 +5,7 @@ module.exports = (req, res, next) => {
       res.status(200).json({
         user: {
           token: "123",
+          username: "admin",
         },
       });
     } else {

@@ -1,33 +1,34 @@
 import React from "react";
-
-const baseUrl = process.env.REACT_APP_MOCK_URL;
+import { useAuth } from "context/auth-context";
 
 const LoginScreen = () => {
+  const { login: ctxLogin, user: ctxUser } = useAuth();
   /**
    * Login function
    * @param {*} username
    * @param {*} password
    */
   const login = ({ username, password }) => {
-    fetch(`${baseUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        return data;
-      });
+    return ctxLogin({ username, password });
+    // fetch(`${baseUrl}/login`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     username,
+    //     password,
+    //   }),
+    // })
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //     return data;
+    //   });
   };
 
   /**
@@ -38,13 +39,12 @@ const LoginScreen = () => {
     event.preventDefault();
     const username = event.target.elements[0].value;
     const password = event.target.elements[1].value;
-    login({ username, password }).then((data) => {
-      console.log(data);
-    });
+    login({ username, password });
   };
 
   return (
     <div>
+      {ctxUser ? ctxUser.username : "No user"}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">username</label>

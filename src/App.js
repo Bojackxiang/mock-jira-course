@@ -1,14 +1,14 @@
-import logo from "./logo.svg";
 import "./App.css";
-import test from "utils/test.js";
-import ProjectList from "lab/project-list";
-import { useEffect } from "react";
+// import ProjectList from "lab/project-list";
 import LoginScreen from "screens/login";
+import { AuthProvider } from "context/auth-context";
 
 function App() {
   return (
     // <ProjectList />
-    <LoginScreen />
+    <AuthProvider>
+      <LoginScreen />
+    </AuthProvider>
   );
 }
 
