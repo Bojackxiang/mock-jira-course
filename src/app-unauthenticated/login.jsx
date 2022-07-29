@@ -10,25 +10,6 @@ const LoginScreen = () => {
    */
   const login = ({ username, password }) => {
     return ctxLogin({ username, password });
-    // fetch(`${baseUrl}/login`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     username,
-    //     password,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     return data;
-    //   });
   };
 
   /**

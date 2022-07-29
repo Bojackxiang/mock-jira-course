@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import qs from "qs";
 import { objectClean } from "./utils";
+import { useHttp } from "utils/http";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -10,7 +11,7 @@ const ProjectList = () => {
     managerId: "",
   });
   const debouncedFormValue = useDebounce(formValue, 2000);
-
+  const client = useHttp();
   /**
    * Initialization the project and fetch user ana project data
    * @param {*} managerId
@@ -19,8 +20,9 @@ const ProjectList = () => {
     const cleanedFormValue = objectClean(debouncedFormValue);
     const stringifiedValue = qs.stringify(cleanedFormValue);
 
-    fetch("http://localhost:3001/projects?" + stringifiedValue)
-      .then((res) => res.json())
+    client("projects", {
+      data: cleanedFormValue,
+    })
       .then((data) => {
         return data;
       })
@@ -31,9 +33,7 @@ const ProjectList = () => {
    * initialization the component
    */
   useMounted(() => {
-    fetch("http://localhost:3001/users")
-      .then((res) => res.json())
-      .then(setManagers);
+    client("users").then(setManagers);
   });
 
   return (
