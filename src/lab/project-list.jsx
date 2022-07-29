@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import qs from "qs";
 import { objectClean } from "./utils";
 import { useHttp } from "utils/http";
+import { useMounted } from "customized-hooks/useMounted";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -100,17 +101,6 @@ const ProjectList = () => {
 };
 
 export default ProjectList;
-
-/**
- * 在页面钢架在的时候执行一个函数
- */
-const useMounted = (callback) => {
-  useEffect(() => {
-    callback();
-    // trying to initialize the component, do not add call back as dependency
-    // eslint-disable-next-line
-  }, []);
-};
 
 // Hook
 const useDebounce = (value, delay) => {

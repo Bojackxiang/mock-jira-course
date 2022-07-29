@@ -1,10 +1,33 @@
+import { useEffect } from "react";
+import { useMounted } from "customized-hooks/useMounted";
 import React, { useState } from "react";
 import * as authUtils from "support/auth-provider";
+import { http } from "utils/http";
 
 export const AuthContext = React.createContext(undefined);
 
+const bootstrapUser = async () => {
+  let user = null;
+  try {
+    const token = authUtils.getToken();
+    if (token) {
+      const meInfo = await http("me", { token });
+      user = meInfo.user;
+    }
+  } catch (error) {
+    return user;
+  } finally {
+    return user;
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    console.log("hello");
+    bootstrapUser().then(setUser);
+  }, []);
 
   /**
    *
