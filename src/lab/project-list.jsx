@@ -71,16 +71,17 @@ const ProjectList = () => {
         })}
       </select>
       {/* table  */}
-      {projects.length}
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Description</th>
+            {/* <th>Name</th>
+            <th>Description</th> */}
           </tr>
         </thead>
         <tbody>
-          {projects.length > 0 &&
+          {/* projects.length 在这边不能直接用，要是用 Boolean wrap 一下 */}
+          {Boolean(projects.length) &&
+            Boolean(managers.length) &&
             projects.map((project) => (
               <tr key={project.id}>
                 <td>{project.name}</td>
@@ -106,6 +107,8 @@ export default ProjectList;
 const useMounted = (callback) => {
   useEffect(() => {
     callback();
+    // trying to initialize the component, do not add call back as dependency
+    // eslint-disable-next-line
   }, []);
 };
 
