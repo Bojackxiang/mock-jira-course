@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
+import styled from "@emotion/styled";
 
 const LoginScreen = () => {
   const { login: ctxLogin, user: ctxUser } = useAuth();
@@ -23,7 +24,6 @@ const LoginScreen = () => {
 
   return (
     <div>
-      {ctxUser ? ctxUser.username : "No user"}
       <Form onFinish={handleSubmit}>
         <Form.Item
           name="username"
@@ -48,9 +48,9 @@ const LoginScreen = () => {
           <Input placeholder="password" type="text" id="password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <LongButton type="primary" htmlType="submit">
             login
-          </Button>
+          </LongButton>
         </Form.Item>
       </Form>
     </div>
@@ -58,3 +58,7 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+const LongButton = styled(Button)`
+  width: 100%;
+`;

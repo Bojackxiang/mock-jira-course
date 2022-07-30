@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button } from "antd";
+import styled from "@emotion/styled";
 
 const RegisterScreen = () => {
   const { register: ctxRegister } = useAuth();
@@ -50,9 +51,9 @@ const RegisterScreen = () => {
           <Input placeholder="password" type="text" id="password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <LongButton type="primary" htmlType="submit">
             Register
-          </Button>
+          </LongButton>
         </Form.Item>
       </Form>
     </div>
@@ -60,3 +61,7 @@ const RegisterScreen = () => {
 };
 
 export default RegisterScreen;
+
+const LongButton = styled(Button)`
+  width: 100%;
+`;
