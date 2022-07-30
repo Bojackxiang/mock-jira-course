@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuth } from "context/auth-context";
+import { Form, Input, Button } from "antd";
 
 const RegisterScreen = () => {
   const { register: ctxRegister } = useAuth();
@@ -10,25 +11,6 @@ const RegisterScreen = () => {
    */
   const register = ({ username, password }) => {
     return ctxRegister({ username, password });
-    // fetch(`${baseUrl}/login`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     username,
-    //     password,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     return data;
-    //   });
   };
 
   /**
@@ -44,17 +26,35 @@ const RegisterScreen = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">username</label>
-          <input type="text" id="username" />
-        </div>
-        <div>
-          <label htmlFor="password">password</label>
-          <input type="text" id="password" />
-        </div>
-        <button type="submit">Register</button>
-      </form>
+      <Form onFinish={handleSubmit}>
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input placeholder="username" type="text" id="username" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+        >
+          <Input placeholder="password" type="text" id="password" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

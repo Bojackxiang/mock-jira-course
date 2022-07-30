@@ -3,6 +3,7 @@ import qs from "qs";
 import { objectClean } from "./utils";
 import { useHttp } from "utils/http";
 import { useMounted } from "customized-hooks/useMounted";
+import { Input, Select, Table } from "antd";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -40,9 +41,9 @@ const ProjectList = () => {
   return (
     <div>
       {/* input field */}
-      <input
-        onChange={(e) => {
-          const name = e.target.value;
+      <Input
+        onChange={(event) => {
+          const name = event.target.value;
           setFormaValue({
             ...formValue,
             name,
@@ -52,50 +53,61 @@ const ProjectList = () => {
         placeholder="项目名称"
       />
 
-      <select
-        onChange={(e) => {
-          const managerId = e.target.value;
-          setFormaValue({
-            ...formValue,
-            managerId,
-          });
-        }}
-        value={formValue.projectManagerId}
-      >
-        <option value="">负责人</option>
-        {managers.map((manager) => {
-          return (
-            <option value={manager.id} key={manager.id}>
-              {manager.name}
-            </option>
-          );
-        })}
-      </select>
+      {managers.length && (
+        <Select
+          style={{ width: 120 }}
+          onChange={(value) => {
+            console.log(value);
+            setFormaValue({
+              ...formValue,
+              managerId: value,
+            });
+          }}
+          defaultValue={"负责人"}
+          value={formValue.projectManagerId}
+        >
+          <Select.Option value="0" key={0}>
+            负责人
+          </Select.Option>
+          {managers.map((manager) => {
+            return (
+              <Select.Option value={manager.id} key={manager.id}>
+                {manager.name}
+              </Select.Option>
+            );
+          })}
+        </Select>
+      )}
       {/* table  */}
-      <table>
-        <thead>
-          <tr>
-            {/* <th>Name</th>
-            <th>Description</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {/* projects.length 在这边不能直接用，要是用 Boolean wrap 一下 */}
-          {Boolean(projects.length) &&
-            Boolean(managers.length) &&
-            projects.map((project) => (
-              <tr key={project.id}>
-                <td>{project.name}</td>
-                <td>
-                  {
-                    managers.find((manager) => manager.id === project.managerId)
-                      .name
-                  }
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      {managers.length && projects.length && (
+        <Table
+          pagination={false}
+          rowKey={(record) => record.id}
+          columns={[
+            {
+              title: "project name",
+              dataIndex: "name",
+              sorter(a, b) {
+                // local compare 可以排序中文字符
+                return a.name.localeCompare(b.name);
+              },
+            },
+            {
+              title: "Manager name",
+              render(value, project) {
+                return (
+                  <span>
+                    {managers.find(
+                      (manager) => manager.id === project.managerId
+                    ).name ?? "Unknown"}
+                  </span>
+                );
+              },
+            },
+          ]}
+          dataSource={projects}
+        ></Table>
+      )}
     </div>
   );
 };
