@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.less";
 import { useAuth } from "context/auth-context";
 import AppAuthenticated from "app-authenticated";
 import AppUnauthenticated from "app-unauthenticated";
