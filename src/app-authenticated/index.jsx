@@ -2,6 +2,7 @@ import React from "react";
 import ProjectList from "lab/project-list";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
+import { Row } from "components/lib";
 
 const AppAuthenticated = () => {
   const { logout } = useAuth();
@@ -9,7 +10,7 @@ const AppAuthenticated = () => {
   return (
     <Container>
       <Header>
-        <HeaderLeft>
+        <HeaderLeft between={false} marginTop={2}>
           <h3>Logo</h3>
           <h3>projects</h3>
           <h3>users</h3>
@@ -44,8 +45,8 @@ const Container = styled.div`
 `;
 
 // 下面的几个也就是 给grid 起个名字而已，所有的都是在 display 中写的
-const HeaderLeft = styled.div``;
-const HeaderRight = styled.div``;
+const HeaderLeft = styled(Row)``;
+const HeaderRight = styled(Row)``;
 const Header = styled.header`
   grid-area: header;
   display: flex;
@@ -68,14 +69,3 @@ const Footer = styled.footer`
 `;
 
 // grid-area 用来给grid子元素起名字
-// const Header = styled(Row)`
-//   padding: 3.2rem;
-//   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-//   z-index: 1;
-// `;
-// const HeaderLeft = styled(Row)``;
-// const HeaderRight = styled.div``;
-// const Main = styled.main`
-//   display: flex;
-//   overflow: hidden;
-// `;
