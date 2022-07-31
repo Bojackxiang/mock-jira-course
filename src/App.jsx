@@ -6,16 +6,7 @@ import AppUnauthenticated from "app-unauthenticated";
 function App() {
   const { user } = useAuth();
 
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      {user ? <AppAuthenticated /> : <AppUnauthenticated />}
-    </div>
-  );
+  return <>{user ? <AppAuthenticated /> : <AppUnauthenticated />}</>;
 }
 
 export default App;
