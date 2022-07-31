@@ -3,7 +3,6 @@ import RegisterScreen from "./register";
 import LoginScreen from "./login";
 import { Card, Divider, Button } from "antd";
 import styled from "@emotion/styled";
-import logo from "assets/logo.svg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
 
@@ -48,13 +47,6 @@ const Background = styled.div`
   background-size: calc(((100vw - 40rem) / 2) - 3.2rem),
     calc(((100vw - 40rem) / 2) - 3.2rem), cover;
   background-image: url(${left}), url(${right});
-`;
-
-const Header = styled.header`
-  background: url(${logo}) no-repeat center;
-  padding: 5rem 0;
-  background-size: 8rem;
-  width: 100%;
 `;
 
 // 运用到 antdesign component 上面

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import qs from "qs";
 import { objectClean } from "./utils";
 import { useHttp } from "utils/http";
 import { useMounted } from "customized-hooks/useMounted";
@@ -20,7 +19,6 @@ const ProjectList = () => {
    */
   useEffect(() => {
     const cleanedFormValue = objectClean(debouncedFormValue);
-    const stringifiedValue = qs.stringify(cleanedFormValue);
 
     client("projects", {
       data: cleanedFormValue,
@@ -29,6 +27,7 @@ const ProjectList = () => {
         return data;
       })
       .then(setProjects);
+    // eslint-disable-next-line
   }, [debouncedFormValue]);
 
   /**

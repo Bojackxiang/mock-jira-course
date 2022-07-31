@@ -4,7 +4,7 @@ import { Form, Input, Button } from "antd";
 import styled from "@emotion/styled";
 
 const LoginScreen = () => {
-  const { login: ctxLogin, user: ctxUser } = useAuth();
+  const { login: ctxLogin } = useAuth();
   /**
    * Login function
    * @param {*} username

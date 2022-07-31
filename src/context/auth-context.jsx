@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useMounted } from "customized-hooks/useMounted";
 import React, { useState } from "react";
 import * as authUtils from "support/auth-provider";
 import { http } from "utils/http";
@@ -25,7 +24,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    console.log("hello");
     bootstrapUser().then(setUser);
   }, []);
 
