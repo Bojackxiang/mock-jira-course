@@ -3,20 +3,23 @@ import ProjectList from "lab/project-list";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
+import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
+import { Dropdown, Menu, Button } from "antd";
 
 const AppAuthenticated = () => {
-  const { logout } = useAuth();
-
   return (
     <Container>
       <Header>
         <HeaderLeft between={false} marginTop={2}>
-          <h3>Logo</h3>
+          {/*高级使用： 直接导入 svg 并且能给他一个新的颜色 */}
+          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
           <h3>projects</h3>
           <h3>users</h3>
         </HeaderLeft>
         <HeaderRight>
-          <button onClick={logout}>Logout</button>
+          <HeaderRight>
+            <User />
+          </HeaderRight>
         </HeaderRight>
       </Header>
       <Nav>nav</Nav>
@@ -31,10 +34,36 @@ const AppAuthenticated = () => {
 
 export default AppAuthenticated;
 
+const User = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Dropdown
+      overlay={
+        <Menu
+          items={[
+            {
+              key: "1",
+              label: (
+                <Button onClick={logout} type={"link"}>
+                  登出
+                </Button>
+              ),
+            },
+          ]}
+        ></Menu>
+      }
+    >
+      <Button type={"link"} onClick={(e) => e.preventDefault()}>
+        Hi, {user?.username}
+      </Button>
+    </Dropdown>
+  );
+};
+
 // temporal dead zone(暂时性死区)
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
+  grid-template-rows: 8rem 1fr 6rem;
   grid-template-columns: 20rem 1fr 20rem;
   grid-template-areas:
     "header header header"
@@ -53,6 +82,10 @@ const Header = styled.header`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  margin-bottom: 2rem;
 `;
 const Main = styled.main`
   grid-area: main;
