@@ -8,7 +8,6 @@ const LoginScreen = () => {
   const { login: ctxLogin } = useAuth();
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
   const { isLoading, run, isError } = useAsync();
-  console.log("isError: ", isError);
 
   /**
    * Login function
