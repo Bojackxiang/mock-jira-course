@@ -34,7 +34,7 @@ export const useAsync = (inputState = defaultState) => {
   const setError = (error) => {
     setState({
       ...state,
-      state: ERROR,
+      status: ERROR,
       error,
     });
   };
@@ -61,11 +61,7 @@ export const useAsync = (inputState = defaultState) => {
         return data;
       })
       .catch((error) => {
-        setError({
-          ...state,
-          status: ERROR,
-          error,
-        });
+        setError(error);
         return Promise.reject(error);
       });
   };
@@ -79,5 +75,6 @@ export const useAsync = (inputState = defaultState) => {
     setData,
     error: state.error,
     run,
+    state,
   };
 };
