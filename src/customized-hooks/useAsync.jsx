@@ -66,7 +66,7 @@ export const useAsync = (inputState = defaultState) => {
           status: ERROR,
           error,
         });
-        return error;
+        return Promise.reject(error);
       });
   };
 
