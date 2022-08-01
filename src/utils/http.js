@@ -16,8 +16,8 @@ export const http = (url, options) => {
   const config = {
     method: "GET",
     headers: {
-      "Content-Type": data ? "application/json" : "",
       Accept: "application/json",
+      "Content-Type": data ? "application/json" : "",
       Authorization: token ? `Bearer ${token}` : "",
       ...restHeaders,
     },
