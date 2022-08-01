@@ -18,7 +18,6 @@ module.exports = (req, res, next) => {
   }
 
   if (req.path === "/me") {
-    console.log("reached");
     res.status(200).json({
       user: {
         token: 123,

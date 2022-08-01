@@ -76,6 +76,7 @@ export const useAsync = (inputState = defaultState) => {
     isSuccess: state.status === SUCCESS,
     isError: state.status === ERROR,
     data: state.data,
+    setData,
     error: state.error,
     run,
   };

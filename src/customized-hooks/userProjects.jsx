@@ -5,7 +5,6 @@ import { useAsync } from "./useAsync";
 
 export const useProjects = (params = {}) => {
   const [projects, setProjects] = React.useState([]);
-  console.log({ projects });
 
   const client = useHttp();
   const { isError, isLoading, isSuccess, run } = useAsync();

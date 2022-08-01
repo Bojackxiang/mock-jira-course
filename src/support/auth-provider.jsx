@@ -35,7 +35,6 @@ export const login = (user) => {
       const data = await response.json();
       return handleUserResponse(data.user);
     } else {
-      console.log("log in failure");
       return Promise.reject(await response.json());
     }
   });

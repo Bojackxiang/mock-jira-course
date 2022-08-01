@@ -1,7 +1,10 @@
 import { useEffect } from "react";
-import React, { useState } from "react";
+import React from "react";
 import * as authUtils from "support/auth-provider";
 import { http } from "utils/http";
+import { useAsync } from "customized-hooks/useAsync";
+import styled from "@emotion/styled";
+import { Spin, Typography } from "antd";
 
 export const AuthContext = React.createContext(undefined);
 
@@ -21,10 +24,20 @@ const bootstrapUser = async () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const {
+    run,
+    isLoading,
+    isIdle,
+    data: user,
+    setData: setUser,
+    isError,
+  } = useAsync();
 
   useEffect(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser()).then((data) => {
+      setUser(data);
+    });
+    // eslint-disable-next-line
   }, []);
 
   /**
@@ -37,14 +50,34 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
+  /**
+   *
+   * @param {*} user
+   * @returns
+   */
   const register = (user) => {
     return authUtils.login(user);
   };
 
+  /**
+   *
+   * @returns
+   */
   const logout = () => {
     return authUtils.logout().then(() => setUser(null));
   };
 
+  // rendering
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
+
+  // rendering
+  if (isError) {
+    return <FullPageError />;
+  }
+
+  // rendering
   return (
     <AuthContext.Provider
       value={{ user, login, logout, register }}
@@ -60,4 +93,30 @@ export const useAuth = () => {
   }
 
   return context;
+};
+
+const FullPage = styled.div`
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const FullPageLoading = () => {
+  return (
+    <FullPage>
+      <Spin size="large" />
+    </FullPage>
+  );
+};
+
+const FullPageError = (props) => {
+  const { message } = props;
+  return (
+    <FullPage>
+      <Typography.Text type="danger">
+        {message ?? "Unknown error"}
+      </Typography.Text>
+    </FullPage>
+  );
 };

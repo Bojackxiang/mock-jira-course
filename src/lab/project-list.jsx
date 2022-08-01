@@ -37,9 +37,7 @@ const ProjectList = () => {
                 <Select
                   style={{ width: 120 }}
                   onChange={(value) => {
-                    console.log({ value });
                     if (value === "0") {
-                      console.log("here");
                       setFormaValue({
                         ...formValue,
                         managerId: "",
