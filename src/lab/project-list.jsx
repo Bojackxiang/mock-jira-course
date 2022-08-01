@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Table } from "antd";
 import { useUsers } from "customized-hooks/useUsers";
 import { useProjects } from "customized-hooks/userProjects";
+import { Link } from "react-router-dom";
 
 const ProjectList = () => {
   const [formValue, setFormaValue] = useState({
@@ -76,6 +77,9 @@ const ProjectList = () => {
                   {
                     title: "project name",
                     dataIndex: "name",
+                    render(_, project) {
+                      return <Link to={`${project.id}`}>{project.name}</Link>;
+                    },
                     sorter(a, b) {
                       // local compare 可以排序中文字符
                       return a.name.localeCompare(b.name);

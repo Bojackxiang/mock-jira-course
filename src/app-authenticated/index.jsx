@@ -5,26 +5,22 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Dropdown, Menu, Button } from "antd";
+import { Link } from "react-router-dom";
+import { Route, Routes } from "react-router";
+import ProjectScreen from "screens/ProjectScreen";
+import Home from "screens/Home";
 
 const AppAuthenticated = () => {
   return (
     <Container>
-      <Header>
-        <HeaderLeft between={false} marginTop={2}>
-          {/*高级使用： 直接导入 svg 并且能给他一个新的颜色 */}
-          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-          <h3>projects</h3>
-          <h3>users</h3>
-        </HeaderLeft>
-        <HeaderRight>
-          <HeaderRight>
-            <User />
-          </HeaderRight>
-        </HeaderRight>
-      </Header>
+      <HeaderComponent />
       <Nav>nav</Nav>
       <Main>
-        <ProjectList />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<ProjectList />} />
+          <Route path="/projects/:projectId" element={<ProjectScreen />} />
+        </Routes>
       </Main>
       <Aside>aside</Aside>
       <Footer>footer</Footer>
@@ -57,6 +53,30 @@ const User = () => {
         Hi, {user?.username}
       </Button>
     </Dropdown>
+  );
+};
+
+const HeaderComponent = () => {
+  return (
+    <Header>
+      <HeaderLeft between={false} marginTop={2}>
+        {/*高级使用： 直接导入 svg 并且能给他一个新的颜色 */}
+        <Link to="">
+          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        </Link>
+        <Link to="projects">
+          <div>projects</div>
+        </Link>
+        <Link to="projects">
+          <div>users</div>
+        </Link>
+      </HeaderLeft>
+      <HeaderRight>
+        <HeaderRight>
+          <User />
+        </HeaderRight>
+      </HeaderRight>
+    </Header>
   );
 };
 
