@@ -65,10 +65,10 @@ const HeaderComponent = () => {
           <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
         </Link>
         <Link to="projects">
-          <div>projects</div>
+          <h3>projects</h3>
         </Link>
         <Link to="projects">
-          <div>users</div>
+          <h3>users</h3>
         </Link>
       </HeaderLeft>
       <HeaderRight>
