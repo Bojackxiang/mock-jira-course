@@ -19,7 +19,7 @@ const AppAuthenticated = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectList />} />
-          <Route path="/projects/:projectId" element={<ProjectScreen />} />
+          <Route path="/projects/:projectId/*" element={<ProjectScreen />} />
         </Routes>
       </Main>
       <Aside>aside</Aside>

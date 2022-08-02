@@ -7,7 +7,7 @@ import { useAsync } from "customized-hooks/useAsync";
 const LoginScreen = () => {
   const { login: ctxLogin } = useAuth();
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
-  const { isLoading, run, isError } = useAsync();
+  const { isLoading, run } = useAsync();
 
   /**
    * Login function
