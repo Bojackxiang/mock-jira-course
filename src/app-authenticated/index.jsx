@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import ProjectScreen from "screens/ProjectScreen";
 import Home from "screens/Home";
+import { resetRoute } from "utils/routeUtils";
 
 const AppAuthenticated = () => {
   return (
@@ -61,9 +62,9 @@ const HeaderComponent = () => {
     <Header>
       <HeaderLeft between={false} marginTop={2}>
         {/*高级使用： 直接导入 svg 并且能给他一个新的颜色 */}
-        <Link to="">
+        <Button type="link" onClick={resetRoute}>
           <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-        </Link>
+        </Button>
         <Link to="projects">
           <h3>projects</h3>
         </Link>
