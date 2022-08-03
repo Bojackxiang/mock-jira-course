@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProjectList from "lab/project-list";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
@@ -10,12 +10,17 @@ import { Route, Routes } from "react-router";
 import ProjectScreen from "screens/ProjectScreen";
 import Home from "screens/Home";
 import { resetRoute } from "utils/routeUtils";
+import ProjectModal from "modals/projectModal";
+import ProjectPopOver from "components/ProjectPopOver";
 
 const AppAuthenticated = () => {
+  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
       <HeaderComponent />
-      <Nav>nav</Nav>
+      <Nav>
+        <Button onClick={() => setProjectModalOpen(true)}>创建项目</Button>
+      </Nav>
       <Main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,6 +30,13 @@ const AppAuthenticated = () => {
       </Main>
       <Aside>aside</Aside>
       <Footer>footer</Footer>
+
+      <ProjectModal
+        projectModalOpen={projectModalOpen}
+        onModelClose={() => {
+          setProjectModalOpen(false);
+        }}
+      />
     </Container>
   );
 };
@@ -65,9 +77,7 @@ const HeaderComponent = () => {
         <Button type="link" onClick={resetRoute}>
           <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
         </Button>
-        <Link to="projects">
-          <h3>projects</h3>
-        </Link>
+        <ProjectPopOver />
         <Link to="projects">
           <h3>users</h3>
         </Link>
@@ -117,6 +127,7 @@ const Aside = styled.aside`
 `;
 const Nav = styled.nav`
   grid-area: nav;
+  text-align: center;
 `;
 const Footer = styled.footer`
   grid-area: footer;

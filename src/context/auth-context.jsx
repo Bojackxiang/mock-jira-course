@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }) => {
   } = useAsync();
 
   useEffect(() => {
-    console.log("hello");
     run(bootstrapUser()).then((data) => {
       setUser(data);
     });

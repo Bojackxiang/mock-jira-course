@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { Dropdown, Table, Button, Menu } from "antd";
 import { Link } from "react-router-dom";
 import Pin from "components/Pin";
 import { useEditProject } from "customized-hooks/useEditProject";
@@ -52,6 +52,35 @@ const ProjectListTable = (props) => {
                 {managers.find((manager) => manager.id === project.managerId)
                   .name ?? "Unknown"}
               </span>
+            );
+          },
+        },
+        {
+          title: "更多",
+          render(project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu
+                    items={[
+                      {
+                        label: (
+                          <Button
+                            type="link"
+                            onClick={() => {
+                              console.log("clicked");
+                            }}
+                          >
+                            编辑
+                          </Button>
+                        ),
+                      },
+                    ]}
+                  />
+                }
+              >
+                <Button type={"link"}>...</Button>
+              </Dropdown>
             );
           },
         },

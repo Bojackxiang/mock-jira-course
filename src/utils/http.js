@@ -1,6 +1,6 @@
 import { useAuth } from "context/auth-context";
 import qs from "qs";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { logout } from "support/auth-provider";
 
 const baseUrl = process.env.REACT_APP_MOCK_URL;
@@ -57,7 +57,7 @@ export const http = (url, options) => {
  */
 export const useHttp = () => {
   const { user } = useAuth();
-  const token = user.token;
+  const token = useMemo(() => user.token, [user.token]);
   return useCallback(
     (url, options) => http(url, { ...options, token }),
     [token]

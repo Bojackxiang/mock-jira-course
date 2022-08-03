@@ -12,8 +12,6 @@ const ProjectScreen = () => {
       <Link to={"kanban"}>看板</Link>
       <Link to={"epic"}>任务组</Link>
 
-      {console.log(window.location.pathname + "/kanban")}
-
       <Routes>
         {/* /projects/:projectId/kanban */}
         <Route path="/kanban" element={<KanbanScreen />} />
