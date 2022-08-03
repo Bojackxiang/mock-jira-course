@@ -1,4 +1,4 @@
-import { Divider, List, Popover, Typography, Button } from "antd";
+import { List, Popover, Typography, Button } from "antd";
 import { useProjects } from "customized-hooks/userProjects";
 
 import React from "react";
@@ -16,7 +16,7 @@ const ProjectPopOver = () => {
             <List.Item.Meta title={project.name} />
           </List.Item>
         ))}
-        <List.Item >
+        <List.Item>
           <Button type="primary">创建项目</Button>
         </List.Item>
       </List>
