@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedHook } from "./useMountedHook";
 
 const IDLE = "idle";
 const LOADING = "loading";
@@ -14,6 +15,7 @@ const defaultState = {
 
 export const useAsync = (inputState = defaultState) => {
   const [state, setState] = useState({ ...inputState });
+  const mountedRef = useMountedHook();
 
   /**
    * update the data in the state
@@ -53,11 +55,15 @@ export const useAsync = (inputState = defaultState) => {
     });
     return promise
       .then((data) => {
-        setData({
-          ...state,
-          status: SUCCESS,
-          data,
-        });
+        console.log("mountedRef: ", mountedRef.current);
+        if (mountedRef) {
+          setData({
+            ...state,
+            status: SUCCESS,
+            data,
+          });
+        }
+
         return data;
       })
       .catch((error) => {
