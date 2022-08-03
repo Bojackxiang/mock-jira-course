@@ -3,12 +3,13 @@ import { Form, Input, Select, Table } from "antd";
 import { useUsers } from "customized-hooks/useUsers";
 import { useProjects } from "customized-hooks/userProjects";
 import { Link } from "react-router-dom";
+import { useUrlQueryParam } from "utils/routeUtils";
 
 const ProjectList = () => {
-  const [formValue, setFormaValue] = useState({
-    name: "",
-    managerId: "",
-  });
+  // useUrlQueryParam 返回的是一个单纯的 obj A
+  // 刚好 这个 A 又是 useDebounce 的dependency
+  // 所以会造成无限循环
+  const [formValue, setFormaValue] = useUrlQueryParam(["name", "managerId"]);
   const debouncedFormValue = useDebounce(formValue, 2000);
   const { users: managers, isLoading: userLoading } = useUsers();
   const { projects: projectsData, isLoading: projectLoading } =
