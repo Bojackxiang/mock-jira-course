@@ -23,9 +23,10 @@ export const http = (url, options) => {
     },
   };
 
-  if (config.method.toUpperCase() === "GET") {
+  if (!options?.method?.toUpperCase()) {
     url += `?${qs.stringify(data)}`;
   } else {
+    config.method = method.toUpperCase();
     config.body = JSON.stringify(data || {});
   }
 
