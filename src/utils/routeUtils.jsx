@@ -20,8 +20,7 @@ export const useUrlQueryParam = (keys) => {
         [key]: searchParams.get(key),
       };
     }, {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, [searchParams, keys]);
 
   const cleanObj = (params) => {
     const cleanedParams = objectClean({

@@ -10,8 +10,7 @@ export const useUsers = (params) => {
 
   useEffect(() => {
     run(client("users")).then(setUsers);
-    // eslint-disable-next-line
-  }, []);
+  }, [run, client]);
 
   return {
     users,

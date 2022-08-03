@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Form, Input } from "antd";
 import { useUsers } from "customized-hooks/useUsers";
 import { useProjects } from "customized-hooks/userProjects";
@@ -11,7 +11,8 @@ const ProjectList = () => {
   // 刚好 这个 A 又是 useDebounce 的dependency
   // 所以会造成无限循环
   // 解决： 就是将 返回的value 用 useMemo 进行包裹，
-  const [formValue, setFormaValue] = useUrlQueryParam(["name", "managerId"]);
+  const urlParams = useMemo(() => ["name", "managerId"], []);
+  const [formValue, setFormaValue] = useUrlQueryParam(urlParams);
   const debouncedFormValue = useDebounce(formValue, 1000);
   const { users: managers, isLoading: userLoading } = useUsers();
   const { projects: projectsData, isLoading: projectLoading } =

@@ -56,7 +56,6 @@ export const useAsync = (inputState = defaultState) => {
       }));
       return promise
         .then((data) => {
-          console.log("mountedRef: ", mountedRef.current);
           if (mountedRef) {
             setData((preState) => ({
               ...preState,

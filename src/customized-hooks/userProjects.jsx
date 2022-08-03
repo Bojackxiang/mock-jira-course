@@ -11,8 +11,7 @@ export const useProjects = (params = {}) => {
 
   useEffect(() => {
     run(client("projects", { data: objectClean(params) })).then(setProjects);
-    // eslint-disable-next-line
-  }, [params]);
+  }, [params, run, client]);
 
   return {
     projects,
