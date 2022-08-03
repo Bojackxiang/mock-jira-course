@@ -28,7 +28,6 @@ export const useUrlQueryParam = (keys) => {
       ...Object.fromEntries(searchParams),
       ...params,
     });
-    console.log("cleanedParams: ", cleanedParams);
 
     return setSearchParams(cleanedParams);
   };

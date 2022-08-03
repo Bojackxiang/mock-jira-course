@@ -4,13 +4,15 @@ import { useUsers } from "customized-hooks/useUsers";
 import { useProjects } from "customized-hooks/userProjects";
 import { Link } from "react-router-dom";
 import { useUrlQueryParam } from "utils/routeUtils";
+import IdSelector from "components/IdSelector";
 
 const ProjectList = () => {
   // useUrlQueryParam 返回的是一个单纯的 obj A
   // 刚好 这个 A 又是 useDebounce 的dependency
   // 所以会造成无限循环
+  // 解决： 就是将 返回的value 用 useMemo 进行包裹，
   const [formValue, setFormaValue] = useUrlQueryParam(["name", "managerId"]);
-  const debouncedFormValue = useDebounce(formValue, 2000);
+  const debouncedFormValue = useDebounce(formValue, 1000);
   const { users: managers, isLoading: userLoading } = useUsers();
   const { projects: projectsData, isLoading: projectLoading } =
     useProjects(debouncedFormValue);
@@ -36,35 +38,18 @@ const ProjectList = () => {
             </Form.Item>
             <Form.Item>
               {managers.length && (
-                <Select
+                <IdSelector
+                  value={formValue.managerId}
                   style={{ width: 120 }}
+                  options={managers}
+                  defaultOption={"负责人"}
                   onChange={(value) => {
-                    if (value === "0") {
-                      setFormaValue({
-                        ...formValue,
-                        managerId: "",
-                      });
-                    } else {
-                      setFormaValue({
-                        ...formValue,
-                        managerId: value,
-                      });
-                    }
+                    setFormaValue({
+                      ...formValue,
+                      managerId: value,
+                    });
                   }}
-                  defaultValue={"负责人"}
-                  value={formValue.projectManagerId}
-                >
-                  <Select.Option value="0" key={0}>
-                    负责人
-                  </Select.Option>
-                  {managers.map((manager) => {
-                    return (
-                      <Select.Option value={manager.id} key={manager.id}>
-                        {manager.name}
-                      </Select.Option>
-                    );
-                  })}
-                </Select>
+                />
               )}
             </Form.Item>
           </Form>
