@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ProjectList from "lab/project-list";
 import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
@@ -12,14 +12,19 @@ import Home from "screens/Home";
 import { resetRoute } from "utils/routeUtils";
 import ProjectModal from "modals/projectModal";
 import ProjectPopOver from "components/ProjectPopOver";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "lab/project-list.slice";
 
 const AppAuthenticated = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  // const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const dispatch = useDispatch();
   return (
     <Container>
       <HeaderComponent />
       <Nav>
-        <Button onClick={() => setProjectModalOpen(true)}>创建项目</Button>
+        <Button onClick={() => dispatch(projectListActions.openProjectModal())}>
+          创建项目
+        </Button>
       </Nav>
       <Main>
         <Routes>
@@ -30,13 +35,7 @@ const AppAuthenticated = () => {
       </Main>
       <Aside>aside</Aside>
       <Footer>footer</Footer>
-
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onModelClose={() => {
-          setProjectModalOpen(false);
-        }}
-      />
+      <ProjectModal />
     </Container>
   );
 };
