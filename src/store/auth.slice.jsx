@@ -26,10 +26,13 @@ export const selectedUser = (state) => state.authState.user;
 
 // 这个就相当于先从 reducer 中将方法拿出来
 const { setUser } = authSlice.actions;
+
 // thunk 的使用 本质就是 return 一个 参数为 dispatch 的函数
 export const login = (form) => (dispatch) =>
   authProvider.login(form).then((user) => dispatch(setUser(user)));
+
 export const logout = () => (dispatch) =>
   authProvider.logout().then(() => dispatch(setUser(null)));
+
 export const bootstrap = () => (dispatch) =>
   bootstrapUser().then((user) => dispatch(setUser(user)));
