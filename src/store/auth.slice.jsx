@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { bootstrapUser } from "context/auth-context";
-import { useSelector } from "react-redux";
 import * as authProvider from "support/auth-provider";
 
 // 这是一个 使用 redux-thunk 实现的 action
@@ -27,7 +26,7 @@ export const selectedUser = (state) => state.authState.user;
 // 这个就相当于先从 reducer 中将方法拿出来
 const { setUser } = authSlice.actions;
 
-// thunk 的使用 本质就是 return 一个 参数为 dispatch 的函数
+// thunk 的使用 本质就是 return 一个 参数为 dispatch 的 promise 函数
 export const login = (form) => (dispatch) =>
   authProvider.login(form).then((user) => dispatch(setUser(user)));
 
