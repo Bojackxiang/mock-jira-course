@@ -5,7 +5,7 @@
 const { createSlice } = require("@reduxjs/toolkit");
 
 const initialState = {
-  projectModalOpen: true,
+  projectModalOpen: false,
 };
 
 export const projectListSlice = createSlice({

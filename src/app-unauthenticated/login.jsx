@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useAuth } from "context/auth-context";
 import { Form, Input, Button, Typography } from "antd";
 import styled from "@emotion/styled";
 import { useAsync } from "customized-hooks/useAsync";
+import useAuthReduxHook from "redux/useAuthReduxHook";
 
 const LoginScreen = () => {
   const { login: ctxLogin } = useAuth();
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
   const { isLoading, run } = useAsync();
+  const { reduxLogin } = useAuthReduxHook();
 
   /**
    * Login function
@@ -22,11 +24,14 @@ const LoginScreen = () => {
    * handle input submit
    * @param {*} event
    */
-  const handleSubmit = ({ username, password }) => {
-    run(login({ username, password })).catch((err) => {
-      setLoginErrorMsg(err.message);
-    });
-  };
+  const handleSubmit = useCallback(({ username, password }) => {
+    // 下面是调用了 auth-redux.slice 中的 login 方法
+    reduxLogin({ username, password });
+    // 下面是调用了 auth-provider 中的 login 方法
+    // run(login({ username, password })).catch((err) => {
+    //   setLoginErrorMsg(err.message);
+    // });
+  }, []);
 
   return (
     <div>

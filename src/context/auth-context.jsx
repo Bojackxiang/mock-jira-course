@@ -5,10 +5,12 @@ import { http } from "utils/http";
 import { useAsync } from "customized-hooks/useAsync";
 import styled from "@emotion/styled";
 import { Spin, Typography } from "antd";
+import { bootstrap, login as authLogin } from "store/auth.slice";
+import { useDispatch } from "react-redux";
 
 export const AuthContext = React.createContext(undefined);
 
-const bootstrapUser = async () => {
+export const bootstrapUser = async () => {
   let user = null;
   try {
     const token = authUtils.getToken();
@@ -17,6 +19,7 @@ const bootstrapUser = async () => {
       user = meInfo.user;
     }
   } catch (error) {
+    console.log(error);
     return user;
   } finally {
     return user;
@@ -32,11 +35,17 @@ export const AuthProvider = ({ children }) => {
     setData: setUser,
     isError,
   } = useAsync();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    run(bootstrapUser()).then((data) => {
-      setUser(data);
-    });
+    console.log("bootstrap");
+    // 使用 传统的方式来 bootstrap user
+    // run(bootstrapUser()).then((data) => {
+    //   setUser(data);
+    // });
+
+    // 使用 redux-thunk 实现的方式来 bootstrap user
+    run(dispatch(bootstrap()));
   }, [run, setUser]);
 
   /**
@@ -94,6 +103,17 @@ export const useAuth = () => {
   return context;
 };
 
+const FullPageError = (props) => {
+  const { message } = props;
+  return (
+    <FullPage>
+      <Typography.Text type="danger">
+        {message ?? "Unknown error"}
+      </Typography.Text>
+    </FullPage>
+  );
+};
+
 const FullPage = styled.div`
   height: 100vh;
   background-color: white;
@@ -105,17 +125,6 @@ const FullPageLoading = () => {
   return (
     <FullPage>
       <Spin size="large" />
-    </FullPage>
-  );
-};
-
-const FullPageError = (props) => {
-  const { message } = props;
-  return (
-    <FullPage>
-      <Typography.Text type="danger">
-        {message ?? "Unknown error"}
-      </Typography.Text>
     </FullPage>
   );
 };

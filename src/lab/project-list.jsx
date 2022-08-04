@@ -56,7 +56,7 @@ const ProjectList = () => {
           </Form>
           <div>
             {/* table  */}
-            {projectsData.length && (
+            {projectsData.length && managers.length && (
               <ProjectListTable
                 projectsData={projectsData}
                 managers={managers}

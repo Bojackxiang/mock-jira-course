@@ -4,9 +4,12 @@ import AppAuthenticated from "app-authenticated";
 import AppUnauthenticated from "app-unauthenticated";
 import { ErrorBoundary } from "components/ErrorBoundry";
 import { BrowserRouter as Router } from "react-router-dom";
+import useAuthReduxHook from "redux/useAuthReduxHook";
 
 function App() {
-  const { user } = useAuth();
+  // read user from the context
+  // const { user } = useAuth();
+  const { user } = useAuthReduxHook();
 
   return (
     <ErrorBoundary>

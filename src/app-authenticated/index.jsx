@@ -12,8 +12,10 @@ import Home from "screens/Home";
 import { resetRoute } from "utils/routeUtils";
 import ProjectModal from "modals/projectModal";
 import ProjectPopOver from "components/ProjectPopOver";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { projectListActions } from "lab/project-list.slice";
+import useAuthReduxHook from "redux/useAuthReduxHook";
+import { selectedUser } from "store/auth.slice";
 
 const AppAuthenticated = () => {
   // const [projectModalOpen, setProjectModalOpen] = useState(false);
@@ -43,7 +45,13 @@ const AppAuthenticated = () => {
 export default AppAuthenticated;
 
 const User = () => {
-  const { logout, user } = useAuth();
+  // access the logout and user from the context
+  // const { user } = useAuth();
+  // access to user by redux
+  const user = useSelector(selectedUser);
+
+  // access the logout and user from the redux
+  const { reduxLogout } = useAuthReduxHook();
   return (
     <Dropdown
       overlay={
@@ -52,7 +60,7 @@ const User = () => {
             {
               key: "1",
               label: (
-                <Button onClick={logout} type={"link"}>
+                <Button onClick={reduxLogout} type={"link"}>
                   登出
                 </Button>
               ),
