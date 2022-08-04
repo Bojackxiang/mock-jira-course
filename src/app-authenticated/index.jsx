@@ -16,17 +16,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { projectListActions } from "lab/project-list.slice";
 import useAuthReduxHook from "redux/useAuthReduxHook";
 import { selectedUser } from "store/auth.slice";
+import { useProjectModal } from "customized-hooks/useProjectModal";
 
 const AppAuthenticated = () => {
   // const [projectModalOpen, setProjectModalOpen] = useState(false);
   const dispatch = useDispatch();
+
+  const { open } = useProjectModal();
+
   return (
     <Container>
       <HeaderComponent />
       <Nav>
-        <Button onClick={() => dispatch(projectListActions.openProjectModal())}>
-          创建项目
-        </Button>
+        <Button onClick={() => open()}>创建项目</Button>
       </Nav>
       <Main>
         <Routes>

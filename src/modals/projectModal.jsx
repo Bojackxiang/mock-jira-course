@@ -1,15 +1,17 @@
-import { Drawer, Button } from "antd";
-import { modalState, projectListActions } from "lab/project-list.slice";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Drawer, Button } from "antd";
+import { modalState } from "lab/project-list.slice";
+import { useSelector } from "react-redux";
+import { useProjectModal } from "customized-hooks/useProjectModal";
 
 const ProjectModal = (props) => {
   // const { projectModalOpen, onModelClose } = props;
-  const dispatch = useDispatch();
+
   const modalVisible = useSelector(modalState);
+  const { close } = useProjectModal();
 
   const onModalClose = () => {
-    dispatch(projectListActions.closeProjectModal());
+    close();
   };
 
   return (

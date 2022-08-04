@@ -19,7 +19,6 @@ export const bootstrapUser = async () => {
       user = meInfo.user;
     }
   } catch (error) {
-    console.log(error);
     return user;
   } finally {
     return user;
@@ -38,7 +37,6 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("bootstrap");
     // 使用 传统的方式来 bootstrap user
     // run(bootstrapUser()).then((data) => {
     //   setUser(data);

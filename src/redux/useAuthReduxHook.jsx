@@ -11,7 +11,6 @@ const useAuthReduxHook = () => {
    * @returns
    */
   const reduxLogin = (form) => {
-    console.log(form);
     return dispatch(login(form));
   };
 
@@ -21,7 +20,6 @@ const useAuthReduxHook = () => {
    * @returns
    */
   const reduxLogout = (form) => {
-    console.log(form);
     return dispatch(logout());
   };
 

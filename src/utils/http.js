@@ -31,7 +31,7 @@ export const http = (url, options) => {
     config.body = JSON.stringify(data || {});
   }
 
-  console.log(`{baseUrl}/{url}: , ${baseUrl}/${url}`);
+  console.debug(`{baseUrl}/{url}: , ${baseUrl}/${url}`);
 
   return fetch(`${baseUrl}/${url}`, config).then(async (response) => {
     if (response.status === 401) {

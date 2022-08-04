@@ -22,7 +22,7 @@ export const useUrlQueryParam = (keys) => {
     }, {});
   }, [searchParams, keys]);
 
-  const cleanObj = (params) => {
+  const setParams = (params) => {
     const cleanedParams = objectClean({
       ...Object.fromEntries(searchParams),
       ...params,
@@ -31,5 +31,5 @@ export const useUrlQueryParam = (keys) => {
     return setSearchParams(cleanedParams);
   };
 
-  return [paramsValues, cleanObj];
+  return [paramsValues, setParams];
 };
