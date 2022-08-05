@@ -4,11 +4,10 @@ import { modalState } from "lab/project-list.slice";
 import { useSelector } from "react-redux";
 import { useProjectModal } from "customized-hooks/useProjectModal";
 import { useHttp } from "utils/http";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import styled from "@emotion/styled";
 
 const ProjectModal = (props) => {
-  // const { projectModalOpen, onModelClose } = props;
   const { close, projectId } = useProjectModal();
   const modalVisible = useSelector(modalState);
   const [projectData, setProjectData] = useState({ name: "" });
@@ -20,6 +19,13 @@ const ProjectModal = (props) => {
       enabled: false,
     }
   );
+  // 下面的可以优化
+  const mutation = useMutation((project) => {
+    return request(`projects/${project.id}`, {
+      data: project,
+      method: "PATCH",
+    });
+  });
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -37,7 +43,8 @@ const ProjectModal = (props) => {
   };
 
   const onFormFinished = () => {
-    console.log(projectData);
+    mutation.mutate(projectData);
+    close();
   };
 
   const onFormChange = (e) => {

@@ -17,7 +17,6 @@ const ProjectList = () => {
   const { users: managers, isLoading: userLoading } = useUsers();
   // const { projects: projectsData, isLoading: projectLoading } =
   //   useProjects(debouncedFormValue);
-
   const {
     data: projectsData,
     isLoading: projectLoading,
