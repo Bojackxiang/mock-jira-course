@@ -28,7 +28,7 @@ export const useUrlQueryParam = (keys) => {
       ...params,
     });
 
-    return setSearchParams(cleanedParams);
+    setSearchParams(cleanedParams);
   };
 
   return [paramsValues, setParams];

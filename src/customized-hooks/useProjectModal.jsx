@@ -1,25 +1,26 @@
 import { projectListActions } from "lab/project-list.slice";
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { useUrlQueryParam } from "utils/routeUtils";
 
 export const useProjectModal = () => {
   const dispatch = useDispatch();
-  const keys = useMemo(() => ["projectCreate"], []);
-  const [{ projectCreate }, setParameters] = useUrlQueryParam([keys]);
+  const keys = useMemo(() => ["modalOpen"], []);
+  const [{ modalOpen, projectId }, setParameters] = useUrlQueryParam([keys]);
 
   const open = () => {
-    setParameters({ projectCreate: true });
     dispatch(projectListActions.openProjectModal());
   };
+
   const close = () => {
-    setParameters({ projectCreate: false });
+    setParameters({ modalOpen: undefined, projectId: undefined });
     dispatch(projectListActions.closeProjectModal());
   };
 
   useEffect(() => {
-    if (projectCreate === "true") open();
-  }, [projectCreate, dispatch]);
+    if (modalOpen === "true" && projectId) open();
+  }, [modalOpen, dispatch]);
 
   return {
     open,

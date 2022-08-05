@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Dropdown, Menu, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import ProjectScreen from "screens/ProjectScreen";
 import Home from "screens/Home";
@@ -17,18 +17,30 @@ import { projectListActions } from "lab/project-list.slice";
 import useAuthReduxHook from "redux/useAuthReduxHook";
 import { selectedUser } from "store/auth.slice";
 import { useProjectModal } from "customized-hooks/useProjectModal";
+import { objectClean } from "lab/utils";
 
 const AppAuthenticated = () => {
   // const [projectModalOpen, setProjectModalOpen] = useState(false);
-  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { open } = useProjectModal();
+
+  const onModalOpenClicked = () => {
+    const cleanedParams = objectClean({
+      ...Object.fromEntries(searchParams),
+    });
+    setSearchParams({
+      ...cleanedParams,
+      modalOpen: true,
+    });
+    open();
+  };
 
   return (
     <Container>
       <HeaderComponent />
       <Nav>
-        <Button onClick={() => open()}>创建项目</Button>
+        <Button onClick={() => onModalOpenClicked()}>创建项目</Button>
       </Nav>
       <Main>
         <Routes>

@@ -1,23 +1,42 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Dropdown, Table, Button, Menu } from "antd";
 import { Link } from "react-router-dom";
 import Pin from "components/Pin";
 import { useEditProject } from "customized-hooks/useEditProject";
 import { useProjectsEditQuery } from "customized-hooks/userProjects";
+import { projectListActions } from "./project-list.slice";
+import { useSearchParams } from "react-router-dom";
+import { objectClean } from "./utils";
 
 const ProjectListTable = (props) => {
   const { projectsData, managers, refetch } = props;
   const { mutate } = useEditProject();
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const editPinkProject = (projectId) => (pin) =>
-    mutate(projectId, {
-      pin: pin,
-    });
+  // !deprecated
+  // const editPinkProject = (projectId) => (pin) =>
+  //   mutate(projectId, {
+  //     pin: pin,
+  //   });
 
   const projectListMutation = useProjectsEditQuery();
 
   const isDataReady =
     projectsData && projectsData.length && managers && managers.length;
+
+  const onEditClicked = (projectId) => {
+    const cleanedParams = objectClean({
+      ...Object.fromEntries(searchParams),
+    });
+    setSearchParams({
+      ...cleanedParams,
+      projectId: projectId,
+      modalOpen: true,
+    });
+    dispatch(projectListActions.openProjectModal());
+  };
 
   return (
     <>
@@ -86,10 +105,20 @@ const ProjectListTable = (props) => {
                               <Button
                                 type="link"
                                 onClick={() => {
-                                  console.log("clicked");
+                                  onEditClicked(project.id);
                                 }}
                               >
                                 编辑
+                              </Button>
+                            ),
+                          },
+                          {
+                            label: (
+                              <Button
+                                type="link"
+                                onClick={() => onEditClicked(project.id)}
+                              >
+                                删除
                               </Button>
                             ),
                           },

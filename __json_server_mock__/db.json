@@ -26,7 +26,7 @@
     },
     {
       "name": "战胜fb",
-      "pin": false,
+      "pin": true,
       "id": 3,
       "managerId": "2",
       "createdAt": "1659146664193"
