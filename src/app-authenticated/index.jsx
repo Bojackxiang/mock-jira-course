@@ -1,6 +1,5 @@
 import React from "react";
 import ProjectList from "lab/project-list";
-import { useAuth } from "context/auth-context";
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
@@ -12,8 +11,7 @@ import Home from "screens/Home";
 import { resetRoute } from "utils/routeUtils";
 import ProjectModal from "modals/projectModal";
 import ProjectPopOver from "components/ProjectPopOver";
-import { useDispatch, useSelector } from "react-redux";
-import { projectListActions } from "lab/project-list.slice";
+import { useSelector } from "react-redux";
 import useAuthReduxHook from "redux/useAuthReduxHook";
 import { selectedUser } from "store/auth.slice";
 import { useProjectModal } from "customized-hooks/useProjectModal";
@@ -25,6 +23,7 @@ const AppAuthenticated = () => {
 
   const { open } = useProjectModal();
 
+  // 这个可以被优化
   const onModalOpenClicked = () => {
     const cleanedParams = objectClean({
       ...Object.fromEntries(searchParams),
