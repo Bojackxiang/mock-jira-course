@@ -8,13 +8,18 @@ import { AuthProvider } from "context/auth-context";
 import "antd/dist/antd.less";
 import { Provider } from "react-redux";
 import { store } from "store";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   //   <React.StrictMode>
   <Provider store={store}>
     <AuthProvider>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </AuthProvider>
   </Provider>
 

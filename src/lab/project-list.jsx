@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Form, Input } from "antd";
 import { useUsers } from "customized-hooks/useUsers";
-import { useProjects } from "customized-hooks/userProjects";
+import { useProjects, useProjectsQuery } from "customized-hooks/userProjects";
 import { useUrlQueryParam } from "utils/routeUtils";
 import IdSelector from "components/IdSelector";
 import ProjectListTable from "./project-list-table";
@@ -15,12 +15,21 @@ const ProjectList = () => {
   const [formValue, setFormaValue] = useUrlQueryParam(urlParams);
   const debouncedFormValue = useDebounce(formValue, 1000);
   const { users: managers, isLoading: userLoading } = useUsers();
-  const { projects: projectsData, isLoading: projectLoading } =
-    useProjects(debouncedFormValue);
+  // const { projects: projectsData, isLoading: projectLoading } =
+  //   useProjects(debouncedFormValue);
+
+  const {
+    data: projectsData,
+    isLoading: projectLoading,
+    isError,
+    refetch,
+  } = useProjectsQuery(debouncedFormValue);
+
+  const isLoading = userLoading && projectLoading;
 
   return (
-    <div>
-      {!(userLoading && projectLoading) ? (
+    <>
+      {!isLoading ? (
         <div>
           <Form layout="inline">
             <Form.Item style={{ flex: 1 }}>
@@ -38,36 +47,32 @@ const ProjectList = () => {
               />
             </Form.Item>
             <Form.Item>
-              {managers.length && (
-                <IdSelector
-                  value={formValue.managerId}
-                  style={{ width: 120 }}
-                  options={managers}
-                  defaultOption={"负责人"}
-                  onChange={(value) => {
-                    setFormaValue({
-                      ...formValue,
-                      managerId: value,
-                    });
-                  }}
-                />
-              )}
+              <IdSelector
+                value={formValue.managerId}
+                style={{ width: 120 }}
+                options={managers}
+                defaultOption={"负责人"}
+                onChange={(value) => {
+                  setFormaValue({
+                    ...formValue,
+                    managerId: value,
+                  });
+                }}
+              />
             </Form.Item>
           </Form>
           <div>
-            {/* table  */}
-            {projectsData.length && managers.length && (
-              <ProjectListTable
-                projectsData={projectsData}
-                managers={managers}
-              />
-            )}
+            <ProjectListTable
+              projectsData={projectsData}
+              managers={managers}
+              refetch={refetch}
+            />
           </div>
         </div>
       ) : (
         <LoadingComponent />
       )}
-    </div>
+    </>
   );
 };
 

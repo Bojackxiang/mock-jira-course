@@ -17,25 +17,31 @@ const IdSelector = (props) => {
   // 如果 value 不在 options 中存在，那么就反悔 default option
   const formattedValue = options.find((option) => option.id === value)?.name;
 
-  return (
-    <Select
-      value={formattedValue ?? defaultOption}
-      onChange={(value) => onChange(toNumber(value))}
-      {...restProps}
-    >
-      {/* 所有没有意义的东西会被转化为0， 来匹配这个 default option */}
-      {defaultOption ? (
-        <Select.Option key={0} value={0}>
-          {defaultOption}
-        </Select.Option>
-      ) : null}
+  const isDataReady = options && options.length;
 
-      {options.map((option) => (
-        <Select.Option key={option.id} value={option.id}>
-          {option.name}
-        </Select.Option>
-      ))}
-    </Select>
+  return (
+    <>
+      {isDataReady && (
+        <Select
+          value={formattedValue ?? defaultOption}
+          onChange={(value) => onChange(toNumber(value))}
+          {...restProps}
+        >
+          {/* 所有没有意义的东西会被转化为0， 来匹配这个 default option */}
+          {defaultOption ? (
+            <Select.Option key={0} value={0}>
+              {defaultOption}
+            </Select.Option>
+          ) : null}
+
+          {options.map((option) => (
+            <Select.Option key={option.id} value={option.id}>
+              {option.name}
+            </Select.Option>
+          ))}
+        </Select>
+      )}
+    </>
   );
 };
 
