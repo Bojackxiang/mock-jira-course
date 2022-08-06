@@ -47,7 +47,7 @@ const ProjectModal = (props) => {
 
   const onFormFinished = () => {
     mutation.mutate(projectData);
-    form.resetFields(); 
+    form.resetFields();
     close();
   };
 

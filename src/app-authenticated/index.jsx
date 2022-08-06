@@ -4,9 +4,8 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Dropdown, Menu, Button } from "antd";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, Navigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
-import ProjectScreen from "screens/ProjectScreen";
 import Home from "screens/Home";
 import { resetRoute } from "utils/routeUtils";
 import ProjectModal from "modals/projectModal";
@@ -16,6 +15,7 @@ import useAuthReduxHook from "redux/useAuthReduxHook";
 import { selectedUser } from "store/auth.slice";
 import { useProjectModal } from "customized-hooks/modal/useProjectModal";
 import { objectClean } from "lab/utils";
+import ProjectScreen from "screens/ProjectScreen";
 
 const AppAuthenticated = () => {
   // const [projectModalOpen, setProjectModalOpen] = useState(false);

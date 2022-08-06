@@ -1,11 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Dropdown, Table, Button, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Dropdown, Table, Menu, Button } from "antd";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import Pin from "components/Pin";
-
 import { projectListActions } from "./project-list.slice";
-import { useSearchParams } from "react-router-dom";
 import { objectClean } from "./utils";
 
 const ProjectListTable = (props) => {
@@ -70,7 +68,11 @@ const ProjectListTable = (props) => {
               title: "project name",
               dataIndex: "name",
               render(_, project) {
-                return <Link to={`${project.id}`}>{project.name}</Link>;
+                return (
+                  <Link to={`${window.location.pathname}/${project.id}`}>
+                    {project.name}
+                  </Link>
+                );
               },
               sorter(a, b) {
                 // local compare 可以排序中文字符

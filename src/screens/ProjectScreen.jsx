@@ -20,7 +20,12 @@ const ProjectScreen = () => {
         {/* 进来这个页面之后直接就先试看板 */}
         <Route
           path="*"
-          element={<Navigate to={window.location.pathname + "/kanban"} />}
+          element={
+            <Navigate
+              to={window.location.pathname + "/kanban/"}
+              replace={true}
+            />
+          }
         />
       </Routes>
     </div>
