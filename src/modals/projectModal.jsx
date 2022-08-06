@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer, Button, Spin, Form, Input } from "antd";
 import { modalState } from "lab/project-list.slice";
 import { useSelector } from "react-redux";
@@ -6,14 +6,12 @@ import { useProjectModal } from "customized-hooks/useProjectModal";
 import { useHttp } from "utils/http";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import styled from "@emotion/styled";
-import { useUrlQueryParam } from "utils/routeUtils";
 
 const ProjectModal = (props) => {
   const { close, projectId } = useProjectModal();
   const modalVisible = useSelector(modalState);
   const [projectData, setProjectData] = useState({ name: "" });
   const request = useHttp();
-  const modalStatusRef = useRef();
 
   const { isLoading, refetch } = useQuery(
     ["project", projectId],
@@ -30,14 +28,13 @@ const ProjectModal = (props) => {
     });
   });
 
-  const [paramsValues] = useUrlQueryParam(["modalOpen"]);
-
   const [form] = Form.useForm();
 
   useEffect(() => {
     if (projectId) {
       refetch({ projectId: projectId });
     }
+    // eslint-disable-next-line
   }, [projectId]);
 
   const onModalClose = () => {

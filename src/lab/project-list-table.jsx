@@ -3,15 +3,14 @@ import { useDispatch } from "react-redux";
 import { Dropdown, Table, Button, Menu } from "antd";
 import { Link } from "react-router-dom";
 import Pin from "components/Pin";
-import { useEditProject } from "customized-hooks/useEditProject";
-import { useProjectsEditQuery } from "customized-hooks/userProjects";
+
 import { projectListActions } from "./project-list.slice";
 import { useSearchParams } from "react-router-dom";
 import { objectClean } from "./utils";
 
 const ProjectListTable = (props) => {
-  const { projectsData, managers, refetch } = props;
-  const { mutate } = useEditProject();
+  const { projectsData, managers, refetch, mutate } = props;
+  // const { mutate } = useEditProject();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -20,8 +19,6 @@ const ProjectListTable = (props) => {
   //   mutate(projectId, {
   //     pin: pin,
   //   });
-
-  const projectListMutation = useProjectsEditQuery();
 
   const isDataReady =
     projectsData && projectsData.length && managers && managers.length;
@@ -59,8 +56,8 @@ const ProjectListTable = (props) => {
                     // }}
 
                     onCheckedChange={async () => {
-                      await projectListMutation.mutate({
-                        id: project.id,
+                      await mutate({
+                        ...project,
                         pin: !project.pin,
                       });
                       await refetch();

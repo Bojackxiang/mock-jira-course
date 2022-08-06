@@ -1,38 +1,39 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Form, Input } from "antd";
 import { useUsers } from "customized-hooks/useUsers";
-import { useProjects, useProjectsQuery } from "customized-hooks/userProjects";
+import { useProjectsQuery } from "customized-hooks/userProjects";
 import { useUrlQueryParam } from "utils/routeUtils";
 import IdSelector from "components/IdSelector";
 import ProjectListTable from "./project-list-table";
 
+const FORM_VALUES = ["name", "managerId"];
+const MODAL_OPEN = ["modalOpen"];
+
 const ProjectList = () => {
-  const urlParams = useMemo(() => ["name", "managerId"], []);
+  // STATIC VALUES
+  const urlParams = useMemo(() => FORM_VALUES, []);
+  const staticModal = useMemo(() => MODAL_OPEN, []);
+  // STATE & HOOKS
   const [formValue, setFormaValue] = useUrlQueryParam(urlParams);
   const debouncedFormValue = useDebounce(formValue, 1000);
-
   const { users: managers, isLoading: userLoading } = useUsers();
-
-  // get project data
   const {
     data: projectsData,
     isLoading: projectLoading,
-    isError,
     refetch,
+    mutate,
   } = useProjectsQuery(debouncedFormValue);
-
-  // check loading status
-  const isLoading = userLoading && projectLoading;
-  // 这边subscribe to utl 一定要用 useMemo 包裹
-  const staticModal = useMemo(() => {
-    return ["modalOpen"];
-  }, []);
   const [modalOpenUrlParam] = useUrlQueryParam(staticModal);
 
+  // USEEFFECT
   useEffect(() => {
     console.log("refetch");
     refetch();
+    // eslint-disable-next-line
   }, [modalOpenUrlParam]);
+
+  // PAGE STATUS
+  const isLoading = userLoading && projectLoading;
 
   return (
     <>
@@ -73,6 +74,7 @@ const ProjectList = () => {
               projectsData={projectsData}
               managers={managers}
               refetch={refetch}
+              mutate={mutate}
             />
           </div>
         </div>
