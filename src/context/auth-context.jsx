@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import { Spin, Typography } from "antd";
 import { bootstrap, login as authLogin } from "store/auth.slice";
 import { useDispatch } from "react-redux";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AuthContext = React.createContext(undefined);
 
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
     isError,
   } = useAsync();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     // 使用 传统的方式来 bootstrap user
@@ -70,7 +72,10 @@ export const AuthProvider = ({ children }) => {
    * @returns
    */
   const logout = () => {
-    return authUtils.logout().then(() => setUser(null));
+    authUtils.logout().then(() => {
+      queryClient.clear(); // 清除 query client 获取的的所有的数据
+      setUser(null);
+    });
   };
 
   // rendering
