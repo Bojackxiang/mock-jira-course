@@ -7,16 +7,13 @@ import IdSelector from "components/IdSelector";
 import ProjectListTable from "./project-list-table";
 
 const ProjectList = () => {
-  // useUrlQueryParam 返回的是一个单纯的 obj A
-  // 刚好 这个 A 又是 useDebounce 的dependency
-  // 所以会造成无限循环
-  // 解决： 就是将 返回的value 用 useMemo 进行包裹，
   const urlParams = useMemo(() => ["name", "managerId"], []);
   const [formValue, setFormaValue] = useUrlQueryParam(urlParams);
   const debouncedFormValue = useDebounce(formValue, 1000);
+
   const { users: managers, isLoading: userLoading } = useUsers();
-  // const { projects: projectsData, isLoading: projectLoading } =
-  //   useProjects(debouncedFormValue);
+
+  // get project data
   const {
     data: projectsData,
     isLoading: projectLoading,
@@ -24,7 +21,18 @@ const ProjectList = () => {
     refetch,
   } = useProjectsQuery(debouncedFormValue);
 
+  // check loading status
   const isLoading = userLoading && projectLoading;
+  // 这边subscribe to utl 一定要用 useMemo 包裹
+  const staticModal = useMemo(() => {
+    return ["modalOpen"];
+  }, []);
+  const [modalOpenUrlParam] = useUrlQueryParam(staticModal);
+
+  useEffect(() => {
+    console.log("refetch");
+    refetch();
+  }, [modalOpenUrlParam]);
 
   return (
     <>

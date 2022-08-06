@@ -38,16 +38,6 @@ export const useProjectsQuery = (params) => {
       enabled: false,
     }
   );
-  const [urlParams] = useUrlQueryParam(["modalOpen", "projectId"]);
-  const memorizedUrlParam = useMemo(() => {
-    console.log("urlParams", urlParams);
-    return urlParams;
-  }, [urlParams]);
-
-  useEffect(() => {
-    console.log("getting projects ==== ", urlParams);
-    queryClient.refetch();
-  }, [memorizedUrlParam]);
 
   return {
     data: queryClient.data,
