@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Form, Input } from "antd";
-import { useUsers } from "customized-hooks/useUsers";
-import { useProjectsQuery } from "customized-hooks/userProjects";
+import { useUsers } from "customized-hooks/user/useUsers";
+
 import { useUrlQueryParam } from "utils/routeUtils";
 import IdSelector from "components/IdSelector";
 import ProjectListTable from "./project-list-table";
+import { useProjectsQuery } from "customized-hooks/project/projectHook";
 
 const FORM_VALUES = ["name", "managerId"];
 const MODAL_OPEN = ["modalOpen"];

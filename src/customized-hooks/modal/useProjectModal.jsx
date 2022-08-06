@@ -2,6 +2,7 @@ import { projectListActions } from "lab/project-list.slice";
 import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useUrlQueryParam } from "utils/routeUtils";
+import { useCallback } from "react";
 
 export const useProjectModal = () => {
   const dispatch = useDispatch();
@@ -10,14 +11,14 @@ export const useProjectModal = () => {
   }, []);
   const [params, setParameters] = useUrlQueryParam(keys);
 
-  const open = () => {
+  const open = useCallback(() => {
     dispatch(projectListActions.openProjectModal());
-  };
+  }, [dispatch]);
 
-  const close = () => {
+  const close = useCallback(() => {
     setParameters({ modalOpen: undefined, projectId: undefined });
     dispatch(projectListActions.closeProjectModal());
-  };
+  }, [dispatch, setParameters]);
 
   useEffect(() => {
     // edit mode
@@ -28,7 +29,7 @@ export const useProjectModal = () => {
     if (params.modalOpen === "true") {
       open();
     }
-  }, [params]);
+  }, [params, open]);
 
   return {
     open,

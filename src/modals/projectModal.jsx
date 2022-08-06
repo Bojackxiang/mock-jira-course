@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Drawer, Button, Spin, Form, Input } from "antd";
 import { modalState } from "lab/project-list.slice";
 import { useSelector } from "react-redux";
-import { useProjectModal } from "customized-hooks/useProjectModal";
+import { useProjectModal } from "customized-hooks/modal/useProjectModal";
 import { useHttp } from "utils/http";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import styled from "@emotion/styled";

@@ -14,7 +14,7 @@ import ProjectPopOver from "components/ProjectPopOver";
 import { useSelector } from "react-redux";
 import useAuthReduxHook from "redux/useAuthReduxHook";
 import { selectedUser } from "store/auth.slice";
-import { useProjectModal } from "customized-hooks/useProjectModal";
+import { useProjectModal } from "customized-hooks/modal/useProjectModal";
 import { objectClean } from "lab/utils";
 
 const AppAuthenticated = () => {

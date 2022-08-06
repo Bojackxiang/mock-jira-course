@@ -1,11 +1,42 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { objectClean } from "lab/utils";
-import React, { useEffect, useMemo } from "react";
-import { useHttp } from "utils/http";
-import { useAsync } from "./useAsync";
-import axios from "axios";
+import React, { useMemo, useEffect } from "react";
 
-// params 的初始值不能设置为 的fault {}, 否则放到 deps 终究会引起无限渲染
+import { useHttp } from "utils/http";
+import { useAsync } from "../useAsync";
+
+export const useAddProject = () => {
+  const { run, ...asyncResult } = useAsync();
+  const client = useHttp();
+
+  const mutate = (params) => {
+    return run(
+      client(`projects/${params.id}`, {
+        data: params.payload,
+        method: "POST",
+      })
+    );
+  };
+
+  return { mutate, ...asyncResult };
+};
+
+export const useEditProject = () => {
+  const { run, ...asyncResult } = useAsync();
+  const client = useHttp();
+
+  const mutate = (projectId, payload) => {
+    return run(
+      client(`projects/${projectId}`, {
+        data: payload,
+        method: "PATCH",
+      })
+    );
+  };
+
+  return { mutate, ...asyncResult };
+};
+
 export const useProjects = (params) => {
   const [projects, setProjects] = React.useState([]);
 
@@ -80,12 +111,3 @@ export const useProjectsEditQuery = () => {
     }
   );
 };
-
-export function usePosts() {
-  return useQuery(["posts"], async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    return data;
-  });
-}
