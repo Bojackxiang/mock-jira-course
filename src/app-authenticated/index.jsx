@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Dropdown, Menu, Button } from "antd";
-import { Link, useSearchParams, Navigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import Home from "screens/Home";
 import { resetRoute } from "utils/routeUtils";
