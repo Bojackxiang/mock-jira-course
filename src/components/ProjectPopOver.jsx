@@ -4,7 +4,7 @@ import { useProjects } from "customized-hooks/project/projectHook";
 import React from "react";
 
 const ProjectPopOver = () => {
-  const { projects } = useProjects();
+  const { projects, refetch } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin);
 
   const content = (
@@ -23,7 +23,7 @@ const ProjectPopOver = () => {
     </div>
   );
   return (
-    <Popover placement="bottom" content={content}>
+    <Popover placement="bottom" content={content} onVisibleChange={refetch}>
       项目
     </Popover>
   );
