@@ -26,14 +26,14 @@
     },
     {
       "name": "战胜fb",
-      "pin": false,
+      "pin": true,
       "id": 3,
       "managerId": "2",
       "createdAt": "1659146664193"
     },
     {
       "name": "重修86 lolasd",
-      "pin": false,
+      "pin": true,
       "id": 4,
       "managerId": "2",
       "createdAt": "1659446664193"

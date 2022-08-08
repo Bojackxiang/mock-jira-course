@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import useAuthReduxHook from "redux/useAuthReduxHook";
 import React from "react";
 import { Spin } from "antd";
+import Profiler from "support/Profiler";
 
 const AuthenticatedApp = React.lazy(() => import("app-authenticated"));
 const UnauthenticatedApp = React.lazy(() => import("app-unauthenticated"));
