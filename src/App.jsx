@@ -1,9 +1,12 @@
 import "./App.css";
-import AppAuthenticated from "app-authenticated";
-import AppUnauthenticated from "app-unauthenticated";
 import { ErrorBoundary } from "components/ErrorBoundry";
 import { BrowserRouter as Router } from "react-router-dom";
 import useAuthReduxHook from "redux/useAuthReduxHook";
+import React from "react";
+import { Spin } from "antd";
+
+const AuthenticatedApp = React.lazy(() => import("app-authenticated"));
+const UnauthenticatedApp = React.lazy(() => import("app-unauthenticated"));
 
 function App() {
   // read user from the context
@@ -14,7 +17,13 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <Router>{user ? <AppAuthenticated /> : <AppUnauthenticated />}</Router>
+      {
+        <React.Suspense fallback={<Spin size="large" />}>
+          <Router>
+            {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+          </Router>
+        </React.Suspense>
+      }
     </ErrorBoundary>
   );
 }
