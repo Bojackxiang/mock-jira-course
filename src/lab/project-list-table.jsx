@@ -6,7 +6,7 @@ import Pin from "components/Pin";
 import { projectListActions } from "./project-list.slice";
 import { objectClean } from "./utils";
 
-const ProjectListTable = (props) => {
+const ProjectListTable = React.memo((props) => {
   const { projectsData, managers, refetch, mutate } = props;
   // const { mutate } = useEditProject();
   const dispatch = useDispatch();
@@ -136,6 +136,5 @@ const ProjectListTable = (props) => {
       )}
     </>
   );
-};
-
+});
 export default ProjectListTable;
