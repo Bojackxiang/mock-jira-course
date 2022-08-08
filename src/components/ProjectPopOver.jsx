@@ -23,7 +23,13 @@ const ProjectPopOver = () => {
     </div>
   );
   return (
-    <Popover placement="bottom" content={content} onVisibleChange={refetch}>
+    <Popover
+      placement="bottom"
+      content={content}
+      onVisibleChange={() => {
+        refetch();
+      }}
+    >
       项目
     </Popover>
   );

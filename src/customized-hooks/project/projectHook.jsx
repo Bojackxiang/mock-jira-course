@@ -41,7 +41,7 @@ export const useProjects = (params) => {
   const [projects, setProjects] = React.useState([]);
 
   const client = useHttp();
-  const { isError, isLoading, isSuccess, run, refetch } = useAsync();
+  const { isError, isLoading, isSuccess, run } = useAsync();
   const staticParams = useMemo(() => params, [params]);
 
   useEffect(() => {
@@ -49,6 +49,12 @@ export const useProjects = (params) => {
       setProjects
     );
   }, [run, client, staticParams]);
+
+  const refetch = () => {
+    run(client("projects", { data: objectClean(staticParams) })).then(
+      setProjects
+    );
+  };
 
   return {
     projects,
